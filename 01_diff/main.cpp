@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
+
 string lcs(const string &s1, const string &s2);
-void showDiff(const string &s1, const string &s2, const string ⊂);
+void showDiff(const string &s1, const string &s2, const string sub);
 int main(int argc, char** argv)
 {
 	string s1, s2;
@@ -15,11 +17,16 @@ string lcs(const string &s1, const string &s2)
 {
 	const int rowSize = s1.size() + 1;
 	const int colSize = s2.size() + 1;
-	string table[rowSize][colSize];
-	char rowChar[rowSize];
-	char colChar[colSize];
+    vector<vector<string>> table;
+    table.resize(rowSize);
+    for (auto& i : table)
+    {
+        i.resize(colSize);
+    }
+    vector<char> rowChar(rowSize);
+    vector<char> colChar(colSize);
 	int cnt = 0;
-	rowChar[0] = colChar[0] = '/0';
+	rowChar[0] = colChar[0] = '\0';
 	for (int i = rowSize - 2, cnt = 1; i >= 0; i--, cnt++)
 	{
 		rowChar[cnt] = s1[i];
@@ -58,7 +65,7 @@ string lcs(const string &s1, const string &s2)
 	
 	return table[rowSize - 1][colSize - 1];
 }
-void showDiff(const string &s1, const string &s2, const string ⊂)
+void showDiff(const string &s1, const string &s2, const string sub)
 {
 	cout << "LSP: " + sub << endl;
 	cout << endl;
