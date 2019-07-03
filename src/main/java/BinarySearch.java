@@ -1,5 +1,6 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Arrays;
 
@@ -22,8 +23,9 @@ public class BinarySearch {
         int[] whitelist = in.readAllInts();
         Arrays.sort(whitelist);
 
-        while (StdIn.hasNext()) {
-            idx = BinarySearch.indexOf(whitelist, n);
+        while (!StdIn.isEmpty()) {
+            int key = StdIn.readInt();
+            int idx = BinarySearch.indexOf(whitelist, key);
             if (idx == -1) {
                 StdOut.println(key);
             }
