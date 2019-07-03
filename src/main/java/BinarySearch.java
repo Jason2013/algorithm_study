@@ -25,8 +25,7 @@ public class BinarySearch {
 
         while (!StdIn.isEmpty()) {
             int key = StdIn.readInt();
-            int idx = BinarySearch.indexOf(whitelist, key);
-            if (idx == -1) {
+            if (indexOf(whitelist, key) == -1) {
                 StdOut.println(key);
             }
         }
