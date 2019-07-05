@@ -36,8 +36,10 @@ public class QuickUnionUF {
     }
 
     public void union(int p, int q) {
-        if (connected(p, q)) return;
-        parent[p] = q;
+        int rootP = find(p);
+        int rootQ = find(q);
+        if (rootP == rootQ) return;
+        parent[rootP] = rootQ;
         count--;
     }
 
