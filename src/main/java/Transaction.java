@@ -85,5 +85,19 @@ public class Transaction implements Comparable<Transaction> {
             StdOut.println(a[i].who + " " + a[i].when + " " + a[i].amount);
         }
         StdOut.println();
+
+        Arrays.sort(a, new Transaction.WhenOrder());
+        StdOut.println("Sorted by when:");
+        for (int i=0; i<a.length; i++) {
+            StdOut.println(a[i].who + " " + a[i].when + " " + a[i].amount);
+        }
+        StdOut.println();
+
+        Arrays.sort(a, new Transaction.HowMuchOrder());
+        StdOut.println("Sorted by amount:");
+        for (int i=0; i<a.length; i++) {
+            StdOut.println(a[i].who + " " + a[i].when + " " + a[i].amount);
+        }
+        StdOut.println();
     }
 }
