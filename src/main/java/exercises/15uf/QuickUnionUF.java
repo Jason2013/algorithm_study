@@ -17,7 +17,14 @@ public class QuickUnionUF {
         return count;
     }
 
+    public void validate(int p) {
+        if (p < 0 || p >= parent.length) {
+            throw new IllegalArgumentException("index " + p + " is not between 0 and " + (parent.length - 1));
+        }
+    }
+
     public int find(int p) {
+        validate(p);
         while (p != parent[p]) {
             p = parent[p];
         }
