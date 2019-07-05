@@ -79,7 +79,7 @@ public class Transaction implements Comparable<Transaction> {
         }
         StdOut.println();
 
-        Arrays.sort(a, Transaction.WhoOrder);
+        Arrays.sort(a, new Transaction.WhoOrder());
         StdOut.println("Sorted by who:");
         for (int i=0; i<a.length; i++) {
             StdOut.println(a[i].who + " " + a[i].when + " " + a[i].amount);
