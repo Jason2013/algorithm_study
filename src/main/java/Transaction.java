@@ -7,7 +7,7 @@ public class Transaction implements Comparable<Transaction> {
     private final Double amount;
 
     public Transaction(String who, Date when, Double amount) {
-        if (Double.isNaN(amount) || Double.isInfinite(amount)) {
+        if (Double.isNaN(amount) || Double.isInfinite(amount))
             throw new IllegalArgumentException("Amount cannot be NaN or infinite!");
         this.who = who;
         this.when = when;
@@ -19,7 +19,7 @@ public class Transaction implements Comparable<Transaction> {
         this.who = a[0];
         this.when = new Date(a[1]);
         Double amount = Double.parseDouble(a[2]);
-        if (Double.isNaN(amount) || Double.isInfinite(amount)) {
+        if (Double.isNaN(amount) || Double.isInfinite(amount))
             throw new IllegalArgumentException("Amount cannot be NaN or infinite!");
         this.amount = amount;
     }
