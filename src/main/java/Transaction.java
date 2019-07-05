@@ -41,6 +41,11 @@ public class Transaction implements Comparable<Transaction> {
     }
 
     @Override
+    public String toString() {
+        return String.format("%-10s %10s %8.2f", who, when, amount);
+    }
+
+    @Override
     public int compareTo(Transaction other) {
         return Double.compare(this.amount, other.amount);
     }
@@ -75,28 +80,28 @@ public class Transaction implements Comparable<Transaction> {
 
         StdOut.println("Unsorted:");
         for (int i=0; i<a.length; i++) {
-            StdOut.println(a[i].who + " " + a[i].when + " " + a[i].amount);
+            StdOut.println(a[i]);
         }
         StdOut.println();
 
         Arrays.sort(a, new Transaction.WhoOrder());
         StdOut.println("Sorted by who:");
         for (int i=0; i<a.length; i++) {
-            StdOut.println(a[i].who + " " + a[i].when + " " + a[i].amount);
+            StdOut.println(a[i]);
         }
         StdOut.println();
 
         Arrays.sort(a, new Transaction.WhenOrder());
         StdOut.println("Sorted by when:");
         for (int i=0; i<a.length; i++) {
-            StdOut.println(a[i].who + " " + a[i].when + " " + a[i].amount);
+            StdOut.println(a[i]);
         }
         StdOut.println();
 
         Arrays.sort(a, new Transaction.HowMuchOrder());
         StdOut.println("Sorted by amount:");
         for (int i=0; i<a.length; i++) {
-            StdOut.println(a[i].who + " " + a[i].when + " " + a[i].amount);
+            StdOut.println(a[i]);
         }
         StdOut.println();
     }
