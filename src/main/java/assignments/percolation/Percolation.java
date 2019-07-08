@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
+    private int size;
     private WeightedQuickUnionUF qu = null;
     private int[] site = null;
 
@@ -12,6 +13,8 @@ public class Percolation {
         if (n <= 0) {
             throw new IllegalArgumentException();
         }
+
+        size = n;
 
         qu = new WeightedQuickUnionUF(n * n + 2);
 
@@ -22,11 +25,53 @@ public class Percolation {
         }
     }
 
+    private void validate(int row, int col) {
+        if (!(row >=1 && row<= size && col>=1 && col<= size)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private int index(int row, int col) {
+        return (row - 1) * size + (col - 1);
+    }
+
     // opens the site (row, col) if it is not open already
-    public void open(int row, int col) {}
+    public void open(int row, int col) {
+        validate(row, col);
+        int idx = index(row, col);
+        site[idx] = 1;
+
+        // check up
+        if (row > 1 && isOpen(row - 1, col)) {
+            int old_idx = index(row - 1, col);
+            qu.union(idx, old_idx);
+        }
+
+        // check down
+        if (row < size && isOpen(row + 1, col)) {
+            int old_idx = index(row + 1, col);
+            qu.union(idx, old_idx);
+        }
+
+        // check left
+        if (col > 1 && isOpen(row, col - 1)) {
+            int old_idx = index(row, col - 1);
+            qu.union(idx, old_idx);
+        }
+        
+        // check right
+        if (col < size && isOpen(row, col + 1)) {
+            int old_idx = index(row, col + 1);
+            qu.union(idx, old_idx);
+        }
+    }
 
     // is the site (row, col) open?
-    public boolean isOpen(int row, int col) {return true;}
+    public boolean isOpen(int row, int col) {
+        validate(row, col);
+        int idx = index(row, col);
+        return site[idx] == 1;
+    }
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {return false;}
