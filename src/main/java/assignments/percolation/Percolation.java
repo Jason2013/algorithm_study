@@ -7,6 +7,9 @@ public class Percolation {
     private int size;
     private WeightedQuickUnionUF qu = null;
     private int[] site = null;
+    private int openSites = 0;
+    private int vtop;
+    private int vbottom;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
@@ -23,6 +26,15 @@ public class Percolation {
         {
             site[i] = 0;
         }
+
+        vtop = n*n;
+        vbottom = n*n + 1;
+
+        // connect virtual node
+        for (int col = 1; col <= size; col ++) {
+            qu.union(vtop, index(1, col));
+            qu.union(vbottom, index(n, col));
+        }
     }
 
     private void validate(int row, int col) {
@@ -38,8 +50,14 @@ public class Percolation {
     // opens the site (row, col) if it is not open already
     public void open(int row, int col) {
         validate(row, col);
+
+        if (isOpen(col, col)) {
+            return;
+        }
+
         int idx = index(row, col);
         site[idx] = 1;
+        openSites ++;
 
         // check up
         if (row > 1 && isOpen(row - 1, col)) {
@@ -58,7 +76,7 @@ public class Percolation {
             int old_idx = index(row, col - 1);
             qu.union(idx, old_idx);
         }
-        
+
         // check right
         if (col < size && isOpen(row, col + 1)) {
             int old_idx = index(row, col + 1);
@@ -74,13 +92,20 @@ public class Percolation {
     }
 
     // is the site (row, col) full?
-    public boolean isFull(int row, int col) {return false;}
+    public boolean isFull(int row, int col) {
+        validate(row, col);
+        if (qu.connected(vtop, index(row, col))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     // returns the number of open sites
-    public int numberOfOpenSites() {return 0;}
+    public int numberOfOpenSites() {return openSites;}
 
     // does the system percolate?
-    public boolean percolates() {return false;}
+    public boolean percolates() {return qu.connected(vtop, vbottom);}
 
     public static void main(String[] args) {
         // StdOut.println("hello, world");
