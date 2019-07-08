@@ -108,6 +108,34 @@ public class Percolation {
     public boolean percolates() {return qu.connected(vtop, vbottom);}
 
     public static void main(String[] args) {
-        // StdOut.println("hello, world");
+        System.out.println("hello, world");
+
+        Percolation p1 = new Percolation(2);
+        for (int i=1; i<=2; i++) {
+            for (int j=1; j<=2; j++) {
+                System.out.println("isOpen(" + i + ", " + j +")=" + p1.isOpen(i, j));
+            }
+        }
+        p1.open(1, 1);
+        p1.open(2, 2);
+        for (int i=1; i<=2; i++) {
+            for (int j=1; j<=2; j++) {
+                System.out.println("isOpen(" + i + ", " + j +")=" + p1.isOpen(i, j));
+            }
+        }
+        System.out.println("numberOfOpenSites=" + p1.numberOfOpenSites());
+        System.out.println("percolates=" + p1.percolates());
+
+        System.out.println();
+        // p1.open(2, 1);
+        p1.open(1, 2);
+        for (int i=1; i<=2; i++) {
+            for (int j=1; j<=2; j++) {
+                System.out.println("isOpen(" + i + ", " + j +")=" + p1.isOpen(i, j));
+            }
+        }
+        System.out.println("numberOfOpenSites=" + p1.numberOfOpenSites());
+        System.out.println("percolates=" + p1.percolates());
+
     }
 }
