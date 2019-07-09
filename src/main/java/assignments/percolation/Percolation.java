@@ -79,8 +79,13 @@ public class Percolation {
         if (row == 1) {
             qu.union(idx, vtop);
         }
-        if (row == size && qu.connected(idx, vtop)) {
-            qu.union(idx, vbottom);
+
+        for (int col = 1; col <= size; col++) {
+            int idx = index(size, col);
+            if (qu.connected(vtop, idx)) {
+                qu.union(idx, vbottom);
+                break;
+            }
         }
     }
 
