@@ -2,8 +2,8 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-    private int size;
-    private double stats[];
+    private final int size;
+    private final double stats[];
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
