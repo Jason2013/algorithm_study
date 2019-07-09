@@ -80,10 +80,10 @@ public class Percolation {
             qu.union(idx, vtop);
         }
 
-        for (int col = 1; col <= size; col++) {
-            int idx = index(size, col);
-            if (qu.connected(vtop, idx)) {
-                qu.union(idx, vbottom);
+        for (int c = 1; c <= size; c++) {
+            int idx2 = index(size, c);
+            if (qu.connected(vtop, idx2)) {
+                qu.union(idx2, vbottom);
                 break;
             }
         }
