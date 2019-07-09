@@ -21,7 +21,7 @@ public class Percolation {
 
         qu = new WeightedQuickUnionUF(n * n + 2);
 
-        site = new int[n*n];
+        site = new boolean[n*n];
         for (int i = 0; i < site.length; i++)
         {
             site[i] = false;
