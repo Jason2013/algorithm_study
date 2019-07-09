@@ -4,10 +4,12 @@ public class Percolation {
 
     private final int size;
     private final WeightedQuickUnionUF quTop;
+    private final WeightedQuickUnionUF quBottom;
     private boolean[] site = null;
     private int openSites = 0;
     private final int vtop;
     private final int vbottom;
+    private boolean percolated = false;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
@@ -17,7 +19,8 @@ public class Percolation {
 
         size = n;
 
-        quTop = new WeightedQuickUnionUF(n * n + 2);
+        quTop = new WeightedQuickUnionUF(n * n + 1);
+        quBottom = new WeightedQuickUnionUF(n * n + 1);
 
         site = new boolean[n*n];
         for (int i = 0; i < site.length; i++)
@@ -55,37 +58,40 @@ public class Percolation {
         if (row > 1 && isOpen(row - 1, col)) {
             int oldIdx = index(row - 1, col);
             quTop.union(idx, oldIdx);
+            quBottom.union(idx, oldIdx);
         }
 
         // check down
         if (row < size && isOpen(row + 1, col)) {
             int oldIdx = index(row + 1, col);
             quTop.union(idx, oldIdx);
+            quBottom.union(idx, oldIdx);
         }
 
         // check left
         if (col > 1 && isOpen(row, col - 1)) {
             int oldIdx = index(row, col - 1);
             quTop.union(idx, oldIdx);
+            quBottom.union(idx, oldIdx);
         }
 
         // check right
         if (col < size && isOpen(row, col + 1)) {
             int oldIdx = index(row, col + 1);
             quTop.union(idx, oldIdx);
+            quBottom.union(idx, oldIdx);
         }
 
         // connect virtual node
         if (row == 1) {
             quTop.union(idx, vtop);
         }
+        if (row == size) {
+            quBottom.union(idx, vtop);
+        }
 
-        for (int c = 1; c <= size; c++) {
-            int idx2 = index(size, c);
-            if (quTop.connected(vtop, idx2)) {
-                quTop.union(idx2, vbottom);
-                break;
-            }
+        if (!percolated && openSites >= size && quTop.connected(idx, vtop) && quBottom.connected(idx, vtop)) {
+            percolated = true;
         }
     }
 
@@ -109,7 +115,7 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return quTop.connected(vtop, vbottom);
+        return percolated;
     }
 
     public static void main(String[] args) {
