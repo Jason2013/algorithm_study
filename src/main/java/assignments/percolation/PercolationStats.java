@@ -33,7 +33,7 @@ public class PercolationStats {
                 p.open(row, col);
             }
 
-            stats[t] = (double)curidx / (double) (n*n);
+            stats[t] = (double)curidx / (double)(n*n);
         }
     }
 
@@ -60,7 +60,7 @@ public class PercolationStats {
     // test client (see below)
     public static void main(String[] args) {
 
-        if (args.length <2) {
+        if (args.length < 2) {
             throw new IllegalArgumentException();
         }
 
