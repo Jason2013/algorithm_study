@@ -98,10 +98,14 @@ public class Percolation {
     }
 
     // returns the number of open sites
-    public int numberOfOpenSites() {return openSites;}
+    public int numberOfOpenSites() {
+        return openSites;
+    }
 
     // does the system percolate?
-    public boolean percolates() {return qu.connected(vtop, vbottom);}
+    public boolean percolates() {
+        return qu.connected(vtop, vbottom);
+    }
 
     public static void main(String[] args) {
         // StdOut.println("hello, world");
