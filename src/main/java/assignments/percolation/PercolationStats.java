@@ -1,12 +1,18 @@
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
+    private int size;
     private double stats[];
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
 
+        if (n<=0 || trials <=0) {
+            throw new IllegalArgumentException();
+        }
+
+        size = n;
         stats = new double[trials];
         for (int t=0; t<trials; t++) {
             Percolation p = new Percolation(n);
@@ -22,8 +28,8 @@ public class PercolationStats {
             while (!p.percolates())
             {
                 int val = idx[curidx++];
-                int row = val / n;
-                int col = val % n;
+                int row = (val / n) + 1;
+                int col = (val % n) + 1;
                 p.open(row, col);
             }
 
@@ -33,38 +39,37 @@ public class PercolationStats {
 
     // sample mean of percolation threshold
     public double mean() {
-        return 0.0;
+        return StdStats.mean(stats);
     }
 
     // sample standard deviation of percolation threshold
     public double stddev() {
-        return 0.0;
+        return StdStats.stddev(stats);
     }
 
     // low endpoint of 95% confidence interval
     public double confidenceLo() {
-        return 0.0;
+        return mean() - 1.96 * stddev() / size;
     }
 
     // high endpoint of 95% confidence interval
     public double confidenceHi() {
-        return 0.0;
+        return mean() + 1.96 * stddev() / size;
     }
 
     // test client (see below)
-    // public static void main(String[] args)
-
     public static void main(String[] args) {
 
-        Percolation p = new Percolation(2);
-        int[] ns = new int[10];
-        for (int i=0; i<ns.length; i++) {
-            ns[i] = i;
+        if (args.length <2) {
+            throw new IllegalArgumentException();
         }
-        StdRandom.shuffle(ns);
-        for (int i=0; i<ns.length; i++) {
-            System.out.print(ns[i] + ", ");
-        }
-        System.out.println("hello, world + " + (7/3) + "," + (7%3));
+
+        int n = Integer.parseInt(args[0]);
+        int trials = Integer.parseInt(args[1]);
+
+        PercolationStats ps = new PercolationStats(n, trials);
+        System.out.println("mean                    = " + ps.mean());
+        System.out.println("stddev                  = " + ps.stddev());
+        System.out.println("95% confidence interval = [" + ps.confidenceLo() +", " + ps.confidenceHi() + "]");
     }
 }
