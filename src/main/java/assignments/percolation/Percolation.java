@@ -94,11 +94,7 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         validate(row, col);
-        if (qu.connected(vtop, index(row, col))) {
-            return true;
-        } else {
-            return false;
-        }
+        return qu.connected(vtop, index(row, col));
     }
 
     // returns the number of open sites
