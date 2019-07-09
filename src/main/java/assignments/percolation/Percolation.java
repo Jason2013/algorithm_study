@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
 
     private final int size;
-    private final WeightedQuickUnionUF qu;
+    private final WeightedQuickUnionUF quTop;
     private boolean[] site = null;
     private int openSites = 0;
     private final int vtop;
@@ -17,7 +17,7 @@ public class Percolation {
 
         size = n;
 
-        qu = new WeightedQuickUnionUF(n * n + 2);
+        quTop = new WeightedQuickUnionUF(n * n + 2);
 
         site = new boolean[n*n];
         for (int i = 0; i < site.length; i++)
@@ -54,36 +54,36 @@ public class Percolation {
         // check up
         if (row > 1 && isOpen(row - 1, col)) {
             int oldIdx = index(row - 1, col);
-            qu.union(idx, oldIdx);
+            quTop.union(idx, oldIdx);
         }
 
         // check down
         if (row < size && isOpen(row + 1, col)) {
             int oldIdx = index(row + 1, col);
-            qu.union(idx, oldIdx);
+            quTop.union(idx, oldIdx);
         }
 
         // check left
         if (col > 1 && isOpen(row, col - 1)) {
             int oldIdx = index(row, col - 1);
-            qu.union(idx, oldIdx);
+            quTop.union(idx, oldIdx);
         }
 
         // check right
         if (col < size && isOpen(row, col + 1)) {
             int oldIdx = index(row, col + 1);
-            qu.union(idx, oldIdx);
+            quTop.union(idx, oldIdx);
         }
 
         // connect virtual node
         if (row == 1) {
-            qu.union(idx, vtop);
+            quTop.union(idx, vtop);
         }
 
         for (int c = 1; c <= size; c++) {
             int idx2 = index(size, c);
-            if (qu.connected(vtop, idx2)) {
-                qu.union(idx2, vbottom);
+            if (quTop.connected(vtop, idx2)) {
+                quTop.union(idx2, vbottom);
                 break;
             }
         }
@@ -99,7 +99,7 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         validate(row, col);
-        return qu.connected(vtop, index(row, col));
+        return quTop.connected(vtop, index(row, col));
     }
 
     // returns the number of open sites
@@ -109,7 +109,7 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return qu.connected(vtop, vbottom);
+        return quTop.connected(vtop, vbottom);
     }
 
     public static void main(String[] args) {
