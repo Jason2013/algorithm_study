@@ -8,7 +8,6 @@ public class Percolation {
     private boolean[] site = null;
     private int openSites = 0;
     private final int vnode;
-    private final int vbottom;
     private boolean percolated = false;
 
     // creates n-by-n grid, with all sites initially blocked
@@ -29,7 +28,6 @@ public class Percolation {
         }
 
         vnode = n*n;
-        vbottom = n*n + 1;
     }
 
     private void validate(int row, int col) {
