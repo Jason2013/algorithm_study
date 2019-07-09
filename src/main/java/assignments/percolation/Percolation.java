@@ -22,7 +22,7 @@ public class Percolation {
         qu = new WeightedQuickUnionUF(n * n + 2);
 
         site = new int[n*n];
-        for (int i=0; i<site.length; i++)
+        for (int i = 0; i < site.length; i++)
         {
             site[i] = 0;
         }
@@ -31,14 +31,14 @@ public class Percolation {
         vbottom = n*n + 1;
 
         // connect virtual node
-        for (int col = 1; col <= size; col ++) {
+        for (int col = 1; col <= size; col++) {
             qu.union(vtop, index(1, col));
             qu.union(vbottom, index(n, col));
         }
     }
 
     private void validate(int row, int col) {
-        if (!(row >=1 && row<= size && col>=1 && col<= size)) {
+        if (!(row >=1 && row <= size && col >= 1 && col <= size)) {
             throw new IllegalArgumentException();
         }
     }
@@ -57,30 +57,30 @@ public class Percolation {
 
         int idx = index(row, col);
         site[idx] = 1;
-        openSites ++;
+        openSites++;
 
         // check up
         if (row > 1 && isOpen(row - 1, col)) {
-            int old_idx = index(row - 1, col);
-            qu.union(idx, old_idx);
+            int oldIdx = index(row - 1, col);
+            qu.union(idx, oldIdx);
         }
 
         // check down
         if (row < size && isOpen(row + 1, col)) {
-            int old_idx = index(row + 1, col);
-            qu.union(idx, old_idx);
+            int oldIdx = index(row + 1, col);
+            qu.union(idx, oldIdx);
         }
 
         // check left
         if (col > 1 && isOpen(row, col - 1)) {
-            int old_idx = index(row, col - 1);
-            qu.union(idx, old_idx);
+            int oldIdx = index(row, col - 1);
+            qu.union(idx, oldIdx);
         }
 
         // check right
         if (col < size && isOpen(row, col + 1)) {
-            int old_idx = index(row, col + 1);
-            qu.union(idx, old_idx);
+            int oldIdx = index(row, col + 1);
+            qu.union(idx, oldIdx);
         }
     }
 
