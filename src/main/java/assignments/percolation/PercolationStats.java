@@ -3,7 +3,6 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
     private static final double CONFIDENCE_95 = 1.96;
-    private final int size;
     private final double[] stats;
 
     // perform independent trials on an n-by-n grid
@@ -13,7 +12,6 @@ public class PercolationStats {
             throw new IllegalArgumentException();
         }
 
-        size = n;
         stats = new double[trials];
         for (int t = 0; t < trials; t++) {
             Percolation p = new Percolation(n);
