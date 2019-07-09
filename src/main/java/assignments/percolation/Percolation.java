@@ -6,7 +6,7 @@ public class Percolation {
 
     private final int size;
     private final WeightedQuickUnionUF qu;
-    private int[] site = null;
+    private boolean[] site = null;
     private int openSites = 0;
     private final int vtop;
     private final int vbottom;
@@ -24,7 +24,7 @@ public class Percolation {
         site = new int[n*n];
         for (int i = 0; i < site.length; i++)
         {
-            site[i] = 0;
+            site[i] = false;
         }
 
         vtop = n*n;
@@ -56,7 +56,7 @@ public class Percolation {
         }
 
         int idx = index(row, col);
-        site[idx] = 1;
+        site[idx] = true;
         openSites++;
 
         // check up
@@ -88,7 +88,7 @@ public class Percolation {
     public boolean isOpen(int row, int col) {
         validate(row, col);
         int idx = index(row, col);
-        return site[idx] == 1;
+        return site[idx];
     }
 
     // is the site (row, col) full?
