@@ -7,7 +7,7 @@ public class Percolation {
     private final WeightedQuickUnionUF quBottom;
     private boolean[] site = null;
     private int openSites = 0;
-    private final int vtop;
+    private final int vnode;
     private final int vbottom;
     private boolean percolated = false;
 
@@ -28,7 +28,7 @@ public class Percolation {
             site[i] = false;
         }
 
-        vtop = n*n;
+        vnode = n*n;
         vbottom = n*n + 1;
     }
 
@@ -84,13 +84,13 @@ public class Percolation {
 
         // connect virtual node
         if (row == 1) {
-            quTop.union(idx, vtop);
+            quTop.union(idx, vnode);
         }
         if (row == size) {
-            quBottom.union(idx, vtop);
+            quBottom.union(idx, vnode);
         }
 
-        if (!percolated && openSites >= size && quTop.connected(idx, vtop) && quBottom.connected(idx, vtop)) {
+        if (!percolated && openSites >= size && quTop.connected(idx, vnode) && quBottom.connected(idx, vnode)) {
             percolated = true;
         }
     }
@@ -105,7 +105,7 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         validate(row, col);
-        return quTop.connected(vtop, index(row, col));
+        return quTop.connected(vnode, index(row, col));
     }
 
     // returns the number of open sites
