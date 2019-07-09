@@ -29,12 +29,6 @@ public class Percolation {
 
         vtop = n*n;
         vbottom = n*n + 1;
-
-        // connect virtual node
-        for (int col = 1; col <= size; col++) {
-            qu.union(vtop, index(1, col));
-            qu.union(vbottom, index(n, col));
-        }
     }
 
     private void validate(int row, int col) {
@@ -81,6 +75,14 @@ public class Percolation {
         if (col < size && isOpen(row, col + 1)) {
             int oldIdx = index(row, col + 1);
             qu.union(idx, oldIdx);
+        }
+
+        // connect virtual node
+        if (row == 1) {
+            qu.union(idx, vtop);
+        }
+        if (row == size) {
+            qu.union(idx, vbottom);
         }
     }
 
