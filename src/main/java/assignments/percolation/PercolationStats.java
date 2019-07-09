@@ -3,23 +3,23 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
     private final int size;
-    private final double stats[];
+    private final double[] stats;
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
 
-        if (n<=0 || trials <=0) {
+        if (n <= 0 || trials <= 0) {
             throw new IllegalArgumentException();
         }
 
         size = n;
         stats = new double[trials];
-        for (int t=0; t<trials; t++) {
+        for (int t = 0; t < trials; t++) {
             Percolation p = new Percolation(n);
 
             // randomize indices
-            int idx[] = new int[n*n];
-            for (int i=0; i<idx.length; i++) {
+            int[] idx = new int[n*n];
+            for (int i = 0; i < idx.length; i++) {
                 idx[i] = i;
             }
             StdRandom.shuffle(idx);
