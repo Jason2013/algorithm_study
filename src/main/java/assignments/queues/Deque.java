@@ -2,7 +2,7 @@
 import java.util.Iterator;
 //import edu.princeton.cs.algs4.StdRandom;
 
-public class Deque<T> implements Iterable<T>
+public class Deque<T> implements Iterable<T> {
 
     // construct an empty deque
   public Deque() {}
