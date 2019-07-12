@@ -1,6 +1,7 @@
 
 import java.util.Iterator;
 //import edu.princeton.cs.algs4.StdRandom;
+import java.util.NoSuchElementException;
 
 public class Deque<T> implements Iterable<T> {
 
@@ -19,21 +20,31 @@ public class Deque<T> implements Iterable<T> {
 
     // add the item to the front
     public void addFirst(T item) {
-
+    	if (item == null) {
+    		throw new IllegalArgumentException();
+    	}
     }
 
     // add the item to the back
     public void addLast(T item) {
-
+    	if (item == null) {
+    		throw new IllegalArgumentException();
+    	}
     }
 
     // remove and return the item from the front
     public T removeFirst() {
+    	if (isEmpty()) {
+    		throw new NoSuchElementException();
+    	}
         return null;
     }
 
     // remove and return the item from the back
     public T removeLast() {
+    	if (isEmpty()) {
+    		throw new NoSuchElementException();
+    	}
         return null;
     }
 
