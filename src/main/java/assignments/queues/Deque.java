@@ -1,21 +1,36 @@
-
 import java.util.Iterator;
-//import edu.princeton.cs.algs4.StdRandom;
 import java.util.NoSuchElementException;
 
 public class Deque<T> implements Iterable<T> {
 
+	private class Node<T> {
+
+		public T data;
+		public Node<T> pre;
+		public Node<T> next;
+
+		public Node(T data) {
+			this.data = data;
+			this.pre = null;
+			this.next = null;
+		}
+	}
+
+	private Node<T> head = null;
+	private Node<T> tail = null;
+	private int count = 0;
+
     // construct an empty deque
-  public Deque() {}
+	public Deque() {}
 
     // is the deque empty?
     public boolean isEmpty() {
-        return false;
+    	return head == null;
     }
 
     // return the number of items on the deque
     public int size() {
-      return 0;
+      return count;
     }
 
     // add the item to the front
@@ -23,6 +38,19 @@ public class Deque<T> implements Iterable<T> {
     	if (item == null) {
     		throw new IllegalArgumentException();
     	}
+
+    	Node<T> newNode = new Node<T>(item);
+    	if (head == null) {
+    		assert tail == null;
+    		head = newNode;
+    		tail = head;
+    	}
+    	else {
+    		newNode.next = head;
+    		head.pre = newNode;
+    		head = newNode;
+    	}
+    	count++;
     }
 
     // add the item to the back
@@ -30,6 +58,19 @@ public class Deque<T> implements Iterable<T> {
     	if (item == null) {
     		throw new IllegalArgumentException();
     	}
+
+    	Node<T> newNode = new Node<T>(item);
+    	if (tail == null) {
+    		assert head == null;
+    		head = newNode;
+    		tail = head;
+    	}
+    	else {
+    		newNode.pre = tail;
+    		tail.next = newNode;
+    		tail = newNode;
+    	}
+    	count++;
     }
 
     // remove and return the item from the front
@@ -46,6 +87,27 @@ public class Deque<T> implements Iterable<T> {
     		throw new NoSuchElementException();
     	}
         return null;
+    }
+
+    private static class DequeIterator<T> implements Iterator<T> {
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public T next() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void remove() {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
     }
 
     // return an iterator over items in order from front to back
