@@ -87,7 +87,6 @@ public class Deque<T> implements Iterable<T> {
     		tail = null;
     	}
     	else {
-    		
     		head = head.next;
     		head.pre = null;
     	}
@@ -115,9 +114,9 @@ public class Deque<T> implements Iterable<T> {
     }
 
     private static class DequeIterator<T> implements Iterator<T> {
-    	
+
     	private Node<T> cur;
-    	
+
     	public DequeIterator(Deque<T> que) {
     		cur = que.head;
     	}
@@ -145,12 +144,21 @@ public class Deque<T> implements Iterable<T> {
 
     // return an iterator over items in order from front to back
     public Iterator<T> iterator() {
-        return null;
+        return new DequeIterator<T>(this);
     }
 
     // unit testing (required)
     public static void main(String[] args) {
     	System.out.println("Hello, world!");
+    	Deque<String> qs = new Deque<String>();
+    	qs.addFirst("This");
+    	qs.addFirst("is");
+    	qs.addFirst("a");
+    	qs.addFirst("Test");
+        for (String s: qs) {
+            System.out.println(s);
+        }
+
     }
 
 }
