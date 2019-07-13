@@ -78,7 +78,20 @@ public class Deque<T> implements Iterable<T> {
     	if (isEmpty()) {
     		throw new NoSuchElementException();
     	}
-        return null;
+    	T ret = head.data;
+    	if (head.next == null) {
+    		// last node
+    		assert head == tail;
+    		assert tail.next == null;
+    		head = null;
+    		tail = null;
+    	}
+    	else {
+    		
+    		head = head.next;
+    		head.pre = null;
+    	}
+        return ret;
     }
 
     // remove and return the item from the back
@@ -86,7 +99,19 @@ public class Deque<T> implements Iterable<T> {
     	if (isEmpty()) {
     		throw new NoSuchElementException();
     	}
-        return null;
+    	T ret = head.data;
+    	if (tail.pre == null) {
+    		// last node
+    		assert head == tail;
+    		assert head.pre == null;
+    		head = null;
+    		tail = null;
+    	}
+    	else {
+    		tail = tail.pre;
+    		tail.next = null;
+    	}
+        return ret;
     }
 
     private static class DequeIterator<T> implements Iterator<T> {
