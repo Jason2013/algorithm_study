@@ -3,7 +3,7 @@ import java.util.NoSuchElementException;
 
 public class Deque<T> implements Iterable<T> {
 
-	private class Node<T> {
+	private static class Node<T> {
 
 		public T data;
 		public Node<T> pre;
@@ -115,17 +115,25 @@ public class Deque<T> implements Iterable<T> {
     }
 
     private static class DequeIterator<T> implements Iterator<T> {
+    	
+    	private Node<T> cur;
+    	
+    	public DequeIterator(Deque<T> que) {
+    		cur = que.head;
+    	}
 
 		@Override
 		public boolean hasNext() {
 			// TODO Auto-generated method stub
-			return false;
+			return cur != null;
 		}
 
 		@Override
 		public T next() {
 			// TODO Auto-generated method stub
-			return null;
+			T ret = cur.data;
+			cur = cur.next;
+			return ret;
 		}
 
 		@Override
