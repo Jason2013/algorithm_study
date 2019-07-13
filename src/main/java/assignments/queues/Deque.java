@@ -130,6 +130,9 @@ public class Deque<T> implements Iterable<T> {
 		@Override
 		public T next() {
 			// TODO Auto-generated method stub
+			if (cur == null) {
+				throw new NoSuchElementException();
+			}
 			T ret = cur.data;
 			cur = cur.next;
 			return ret;
