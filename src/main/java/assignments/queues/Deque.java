@@ -1,23 +1,23 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Deque<T> implements Iterable<T> {
+public class Deque<Item> implements Iterable<Item> {
 
-	private static class Node<T> {
+	private static class Node<Item> {
 
-		public T data;
-		public Node<T> pre;
-		public Node<T> next;
+		public Item data;
+		public Node<Item> pre;
+		public Node<Item> next;
 
-		public Node(T data) {
+		public Node(Item data) {
 			this.data = data;
 			this.pre = null;
 			this.next = null;
 		}
 	}
 
-	private Node<T> head = null;
-	private Node<T> tail = null;
+	private Node<Item> head = null;
+	private Node<Item> tail = null;
 	private int count = 0;
 
     // construct an empty deque
@@ -34,12 +34,12 @@ public class Deque<T> implements Iterable<T> {
     }
 
     // add the item to the front
-    public void addFirst(T item) {
+    public void addFirst(Item item) {
     	if (item == null) {
     		throw new IllegalArgumentException();
     	}
 
-    	Node<T> newNode = new Node<T>(item);
+    	Node<Item> newNode = new Node<Item>(item);
     	if (head == null) {
     		assert tail == null;
     		head = newNode;
@@ -54,12 +54,12 @@ public class Deque<T> implements Iterable<T> {
     }
 
     // add the item to the back
-    public void addLast(T item) {
+    public void addLast(Item item) {
     	if (item == null) {
     		throw new IllegalArgumentException();
     	}
 
-    	Node<T> newNode = new Node<T>(item);
+    	Node<Item> newNode = new Node<Item>(item);
     	if (tail == null) {
     		assert head == null;
     		head = newNode;
@@ -74,11 +74,11 @@ public class Deque<T> implements Iterable<T> {
     }
 
     // remove and return the item from the front
-    public T removeFirst() {
+    public Item removeFirst() {
     	if (isEmpty()) {
     		throw new NoSuchElementException();
     	}
-    	T ret = head.data;
+    	Item ret = head.data;
     	if (head.next == null) {
     		// last node
     		assert head == tail;
@@ -94,11 +94,11 @@ public class Deque<T> implements Iterable<T> {
     }
 
     // remove and return the item from the back
-    public T removeLast() {
+    public Item removeLast() {
     	if (isEmpty()) {
     		throw new NoSuchElementException();
     	}
-    	T ret = head.data;
+    	Item ret = head.data;
     	if (tail.pre == null) {
     		// last node
     		assert head == tail;
@@ -113,11 +113,11 @@ public class Deque<T> implements Iterable<T> {
         return ret;
     }
 
-    private static class DequeIterator<T> implements Iterator<T> {
+    private static class DequeIterator<Item> implements Iterator<Item> {
 
-    	private Node<T> cur;
+    	private Node<Item> cur;
 
-    	public DequeIterator(Deque<T> que) {
+    	public DequeIterator(Deque<Item> que) {
     		cur = que.head;
     	}
 
@@ -128,12 +128,12 @@ public class Deque<T> implements Iterable<T> {
 		}
 
 		@Override
-		public T next() {
+		public Item next() {
 			// TODO Auto-generated method stub
 			if (cur == null) {
 				throw new NoSuchElementException();
 			}
-			T ret = cur.data;
+			Item ret = cur.data;
 			cur = cur.next;
 			return ret;
 		}
@@ -146,8 +146,8 @@ public class Deque<T> implements Iterable<T> {
     }
 
     // return an iterator over items in order from front to back
-    public Iterator<T> iterator() {
-        return new DequeIterator<T>(this);
+    public Iterator<Item> iterator() {
+        return new DequeIterator<Item>(this);
     }
 
     // unit testing (required)
