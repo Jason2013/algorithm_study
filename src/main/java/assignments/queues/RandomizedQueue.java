@@ -6,35 +6,35 @@ import edu.princeton.cs.algs4.StdRandom;
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private static final int INIT_CAPACITY = 8;
-    private int _size;
-    private int _capacity;
+    private int theSize;
+    private int theCapacity;
     private Item[] items;
     // construct an empty randomized queue
 //    @SuppressWarnings("unchecked")
     public RandomizedQueue() {
-        _size = 0;
-        _capacity = INIT_CAPACITY;
-        items = (Item[]) new Object[_capacity];
+        theSize = 0;
+        theCapacity = INIT_CAPACITY;
+        items = (Item[]) new Object[theCapacity];
     }
 
     // is the randomized queue empty?
     public boolean isEmpty() {
-        return _size == 0;
+        return theSize == 0;
     }
 
     // return the number of items on the randomized queue
     public int size() {
-        return _size;
+        return theSize;
     }
 
     private void resize(int n) {
-        assert n >= _size;
+        assert n >= theSize;
 //        @SuppressWarnings("unchecked")
         Item[] newItems = (Item[]) new Object[n];
-        for (int i = 0; i < _size; i++) {
+        for (int i = 0; i < theSize; i++) {
             newItems[i] = items[i];
         }
-        _capacity = n;
+        theCapacity = n;
         items = newItems;
     }
 
@@ -43,11 +43,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (item == null) {
             throw new IllegalArgumentException();
         }
-        if (_size == _capacity) {
-            resize(_capacity * 2);
+        if (theSize == theCapacity) {
+            resize(theCapacity * 2);
         }
-        items[_size] = item;
-        _size++;
+        items[theSize] = item;
+        theSize++;
     }
 
     // remove and return a random item
@@ -55,13 +55,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
-        int idx = StdRandom.uniform(_size);
+        int idx = StdRandom.uniform(theSize);
         Item ret = items[idx];
-        items[idx] = items[--_size];
-        items[_size] = null;
+        items[idx] = items[--theSize];
+        items[theSize] = null;
 
-        if (_size < _capacity / 4) {
-            resize(_capacity /2);
+        if (theSize < theCapacity / 4) {
+            resize(theCapacity /2);
         }
         return ret;
     }
@@ -71,7 +71,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
-        return items[StdRandom.uniform(_size)];
+        return items[StdRandom.uniform(theSize)];
     }
 
     private class RandomizedQueueIterator implements Iterator<Item> {
@@ -79,7 +79,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         private final int[] indices;
         private int cur;
         public RandomizedQueueIterator() {
-            indices = new int[_size];
+            indices = new int[theSize];
             for (int i = 0; i < indices.length; i++) {
                 indices[i] = i;
             }
