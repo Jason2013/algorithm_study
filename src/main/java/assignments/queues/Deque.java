@@ -91,6 +91,7 @@ public class Deque<Item> implements Iterable<Item> {
             head = head.next;
             head.pre = null;
         }
+        --count;
         return ret;
     }
 
@@ -111,6 +112,7 @@ public class Deque<Item> implements Iterable<Item> {
             tail = tail.pre;
             tail.next = null;
         }
+        --count;
         return ret;
     }
 
