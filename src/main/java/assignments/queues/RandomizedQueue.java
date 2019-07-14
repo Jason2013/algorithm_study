@@ -75,7 +75,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     	}
 		@Override
 		public boolean hasNext() {
-			return cur < indices.length - 1;
+			return cur < indices.length;
 			// TODO Auto-generated method stub
 		}
 
@@ -95,6 +95,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // unit testing (required)
     public static void main(String[] args) {
     	System.out.println("Hello, world!");
+
+    	RandomizedQueue<String> rq = new RandomizedQueue<>();
+    	for (int i = 0; i < 10; i++) {
+    		rq.enqueue((new Integer(i)).toString());
+    	}
+
+    	for (String s: rq) {
+    		System.out.println(s);
+    	}
+
     }
 
 }
