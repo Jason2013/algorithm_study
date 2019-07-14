@@ -21,7 +21,8 @@ public class Deque<Item> implements Iterable<Item> {
     private int count = 0;
 
     // construct an empty deque
-    public Deque() {}
+    public Deque() {
+    }
 
     // is the deque empty?
     public boolean isEmpty() {
