@@ -106,12 +106,12 @@ public class Point implements Comparable<Point> {
         }
     }
 
-    private static class PointComparator implements Comparator<Point> {
+    private class PointComparator implements Comparator<Point> {
 
         public PointComparator() {}
 
         public int compare(Point a, Point b) {
-            return a.compareTo(b);
+            return compareTo(a) - compareTo(b);
         }
 
     }
