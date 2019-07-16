@@ -135,5 +135,13 @@ public class Point implements Comparable<Point> {
      */
     public static void main(String[] args) {
         /* YOUR CODE HERE */
+        Point a = new Point(2, 2);
+        Point b = new Point(2, 3);
+        Point c = new Point(3, 2);
+        assert a.compareTo(b) < 0;
+        assert b.compareTo(a) > 0;
+        assert a.compareTo(c) < 0;
+        assert c.compareTo(a) > 0;
+        assert a.compareTo(a) == 0;
     }
 }
