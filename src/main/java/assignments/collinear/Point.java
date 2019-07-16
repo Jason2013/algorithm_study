@@ -60,6 +60,7 @@ public class Point implements Comparable<Point> {
      */
     public double slopeTo(Point that) {
         /* YOUR CODE HERE */
+        return 0.0;
     }
 
     /**
@@ -95,6 +96,16 @@ public class Point implements Comparable<Point> {
         }
     }
 
+    private static class PointComparator implements Comparator<Point> {
+
+        public PointComparator() {}
+
+        public int compare(Point a, Point b) {
+            return a.compareTo(b);
+        }
+
+    }
+
     /**
      * Compares two points by the slope they make with this point.
      * The slope is defined as in the slopeTo() method.
@@ -103,6 +114,7 @@ public class Point implements Comparable<Point> {
      */
     public Comparator<Point> slopeOrder() {
         /* YOUR CODE HERE */
+        return new PointComparator();
     }
 
 
