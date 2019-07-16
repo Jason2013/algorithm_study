@@ -111,7 +111,16 @@ public class Point implements Comparable<Point> {
         public PointComparator() {}
 
         public int compare(Point a, Point b) {
-            return compareTo(a) - compareTo(b);
+            double diff = slopeTo(a) - slopeTo(b);
+            if (diff < 0) {
+                return -1;
+            }
+            else if (diff == 0) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
         }
 
     }
@@ -163,6 +172,11 @@ public class Point implements Comparable<Point> {
         Point d = new Point(4, 3);
         double ad = a.slopeTo(d);
         assert a.slopeTo(d) == 0.5;
+        
+        Point a1 = new Point(4, 3);
+        Point a2 = new Point(3, 4);
+        assert a.slopeOrder().compare(a1, a2) < 0;
+        assert a.slopeOrder().compare(a2, a1) > 0;
 
     }
 }
