@@ -1,5 +1,11 @@
+import edu.princeton.cs.algs4.Quick;
 
 public class BruteCollinearPoints {
+
+    private Point[] pts;
+    private int segmentCount = 0;
+    private LineSegment[] segments;
+
     public BruteCollinearPoints(Point[] points) { // finds all line segments containing 4 points
         if (points == null) {
             throw new IllegalArgumentException();
@@ -10,20 +16,49 @@ public class BruteCollinearPoints {
             }
         }
         for (int i = 0; i < points.length - 1; i++) {
-            for (int j = i+1; j < points.length; j++) {
+            for (int j = i + 1; j < points.length; j++) {
                 if (points[i].compareTo(points[j]) == 0) {
                     throw new IllegalArgumentException();
                 }
             }
         }
+
+        pts = new Point[points.length];
+        for (int i = 0; i < points.length; i++) {
+            pts[i] = points[i];
+        }
+
+        Quick.sort(pts);
+
+        LineSegment[] segs = new LineSegment[pts.length / 4];
+        for (int p = 0; p < pts.length - 3; p++) {
+            for (int q = p + 1; q < pts.length - 2; q++) {
+                for (int r = q + 1; r < pts.length - 1; r++) {
+                    for (int s = r + 1; s < pts.length; s++) {
+                        double slope = pts[p].slopeTo(pts[q]);
+                        if (pts[p].slopeTo(pts[r]) == slope && pts[p].slopeTo(pts[s]) == slope) {
+                            segs[segmentCount++] = new LineSegment(pts[p], pts[s]);
+                            ++segmentCount;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (segmentCount > 0) {
+            segments = new LineSegment[segmentCount];
+            for (int i = 0; i < segmentCount; i++) {
+                segments[i] = segs[i];
+            }
+        }
     }
 
     public int numberOfSegments() { // the number of line segments
-        return 0;
+        return segmentCount;
     }
 
     public LineSegment[] segments() { // the line segments
-        return null;
+        return segments;
     }
 
     public static void main(String[] args) {
@@ -32,8 +67,7 @@ public class BruteCollinearPoints {
             BruteCollinearPoints p1 = new BruteCollinearPoints(null);
             assert false;
             System.out.println(p1.toString());
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
 //            System.out.println("caught1");
         }
         try {
@@ -41,8 +75,7 @@ public class BruteCollinearPoints {
             BruteCollinearPoints p1 = new BruteCollinearPoints(pts);
             assert false;
             System.out.println(p1.toString());
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
 //            System.out.println("caught2");
         }
         try {
@@ -52,8 +85,7 @@ public class BruteCollinearPoints {
             BruteCollinearPoints p1 = new BruteCollinearPoints(pts);
             assert false;
             System.out.println(p1.toString());
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
 //            System.out.println("caught3");
         }
 
