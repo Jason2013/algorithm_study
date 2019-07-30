@@ -30,7 +30,7 @@ public class BruteCollinearPoints {
 
         Quick.sort(pts);
 
-        LineSegment[] segs = new LineSegment[pts.length / 4];
+        LineSegment[] segs = new LineSegment[pts.length];
         for (int p = 0; p < pts.length - 3; p++) {
             for (int q = p + 1; q < pts.length - 2; q++) {
                 for (int r = q + 1; r < pts.length - 1; r++) {
@@ -38,7 +38,6 @@ public class BruteCollinearPoints {
                         double slope = pts[p].slopeTo(pts[q]);
                         if (pts[p].slopeTo(pts[r]) == slope && pts[p].slopeTo(pts[s]) == slope) {
                             segs[segmentCount++] = new LineSegment(pts[p], pts[s]);
-                            ++segmentCount;
                         }
                     }
                 }
