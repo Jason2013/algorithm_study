@@ -1,37 +1,13 @@
 import java.util.Arrays;
-//import java.util.ArrayList;
-
-//import edu.princeton.cs.algs4.Merge;
 
 public class FastCollinearPoints {
 
-//    private Point[] pts;
     private int segmentCount = 0;
     private LineSegment[] segments;
 
-//    private class PointSlope implements Comparable<PointSlope>
-//    {
-//        public final Point pt;
-//        public final double slope;
-////        public final
-//
-//        @Override
-//        public int compareTo(PointSlope arg0) {
-//            // TODO Auto-generated method stub
-//            return this.slope < arg0.slope ? -1 : (this.slope == arg0.slope ? 0 : 1);
-////            return 0;
-//        }
-//
-//        PointSlope(Point pt, Point pto)
-//        {
-//            this.pt = pt;
-//            this.slope = pt.compareTo(pto);
-//        }
-//    }
 
     public FastCollinearPoints(Point[] points)     // finds all line segments containing 4 or more points
     {
-        //
         if (points == null) {
             throw new IllegalArgumentException();
         }
@@ -63,15 +39,10 @@ public class FastCollinearPoints {
 
             int beg = 0;
             int end = 1;
-//            for (int j=0;j<slopePoints.length;j++) {
-//                //
-//            }
             double slopeVal = origin.slopeTo(slopePoints[beg]);
             while (end < slopePoints.length)//; end++)
             {
-//                double
                 if (slopeVal == origin.slopeTo(slopePoints[end])) {
-//                    end++;
                 }
                 else
                 {
@@ -82,7 +53,6 @@ public class FastCollinearPoints {
                     }
                     beg = end;
                     slopeVal = origin.slopeTo(slopePoints[beg]);
-//                    end
                 }
                 end++;
 
