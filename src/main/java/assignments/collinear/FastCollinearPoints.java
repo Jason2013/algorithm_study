@@ -5,8 +5,7 @@ public class FastCollinearPoints {
     private int segmentCount = 0;
     private LineSegment[] segments;
 
-
-    public FastCollinearPoints(Point[] points)     // finds all line segments containing 4 or more points
+    public FastCollinearPoints(Point[] points) // finds all line segments containing 4 or more points
     {
         if (points == null) {
             throw new IllegalArgumentException();
@@ -27,29 +26,24 @@ public class FastCollinearPoints {
 
         LineSegment[] segs = new LineSegment[sortedPoints.length];
 
-        for (int i=0;i<sortedPoints.length;i++) {
+        for (int i = 0; i < sortedPoints.length - 3; i++) {
             Point origin = sortedPoints[i];
-            Point[] slopePoints = new Point[sortedPoints.length-1-i];
-            for (int j=i+1;j<sortedPoints.length;j++)
-            {
-                //
-                slopePoints[j-(i+1)] = sortedPoints[j];
+            Point[] slopePoints = new Point[sortedPoints.length - 1 - i];
+            for (int j = i + 1; j < sortedPoints.length; j++) {
+                slopePoints[j - (i + 1)] = sortedPoints[j];
             }
             Arrays.sort(slopePoints, origin.slopeOrder());
 
             int beg = 0;
             int end = 1;
             double slopeVal = origin.slopeTo(slopePoints[beg]);
-            while (end < slopePoints.length)//; end++)
+            while (end < slopePoints.length)// ; end++)
             {
                 if (slopeVal == origin.slopeTo(slopePoints[end])) {
-                }
-                else
-                {
-                    if (end - beg >= 3)
-                    {
+                } else {
+                    if (end - beg >= 3) {
                         //
-                        segs[segmentCount++] = new LineSegment(origin,slopePoints[end-1]);
+                        segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
                     }
                     beg = end;
                     slopeVal = origin.slopeTo(slopePoints[beg]);
@@ -58,26 +52,25 @@ public class FastCollinearPoints {
 
             }
 
-            if (end - beg >=2) {
-                //
-                segs[segmentCount++] = new LineSegment(origin,slopePoints[end]);
-            }
-
-            segments = new LineSegment[segmentCount];
-            for (int k=0;k<segments.length;k++) {
-                segments[k] = segs[k];
+            if (end - beg >= 3) {
+                segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
             }
 
         }
 
+        segments = new LineSegment[segmentCount];
+        for (int k = 0; k < segments.length; k++) {
+            segments[k] = segs[k];
+        }
+
     }
 
-    public           int numberOfSegments()        // the number of line segments
+    public int numberOfSegments() // the number of line segments
     {
-        return 0;
+        return segmentCount;
     }
 
-    public LineSegment[] segments()                // the line segments
+    public LineSegment[] segments() // the line segments
     {
         return null;
     }
@@ -109,6 +102,21 @@ public class FastCollinearPoints {
         } catch (IllegalArgumentException e) {
 //            System.out.println("caught3");
         }
+
+        Point[] pts1 = new Point[9];
+
+        pts1[0] = new Point(1, 1);
+        pts1[1] = new Point(2, 1);
+        pts1[2] = new Point(3, 1);
+        pts1[3] = new Point(4, 1);
+        pts1[4] = new Point(4, 2);
+        pts1[5] = new Point(4, 3);
+        pts1[6] = new Point(4, 4);
+        pts1[7] = new Point(3, 3);
+        pts1[8] = new Point(2, 2);
+
+        FastCollinearPoints bcp1 = new FastCollinearPoints(pts1);
+        assert bcp1.numberOfSegments() == 3;
     }
 
 }
