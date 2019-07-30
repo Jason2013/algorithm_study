@@ -88,6 +88,20 @@ public class BruteCollinearPoints {
 //            System.out.println("caught3");
         }
 
+        Point[] pts1 = new Point[9];
+
+        pts1[0] = new Point(1, 1);
+        pts1[1] = new Point(2, 1);
+        pts1[2] = new Point(3, 1);
+        pts1[3] = new Point(4, 1);
+        pts1[4] = new Point(4, 2);
+        pts1[5] = new Point(4, 3);
+        pts1[6] = new Point(4, 4);
+        pts1[7] = new Point(3, 3);
+        pts1[8] = new Point(2, 2);
+
+        BruteCollinearPoints bcp1 = new BruteCollinearPoints(pts1);
+        assert bcp1.numberOfSegments() == 3;
     }
 
 }
