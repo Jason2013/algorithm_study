@@ -1,9 +1,33 @@
+import java.util.Arrays;
+//import java.util.ArrayList;
+
+//import edu.princeton.cs.algs4.Merge;
 
 public class FastCollinearPoints {
 
-    private Point[] pts;
+//    private Point[] pts;
     private int segmentCount = 0;
     private LineSegment[] segments;
+
+//    private class PointSlope implements Comparable<PointSlope>
+//    {
+//        public final Point pt;
+//        public final double slope;
+////        public final
+//
+//        @Override
+//        public int compareTo(PointSlope arg0) {
+//            // TODO Auto-generated method stub
+//            return this.slope < arg0.slope ? -1 : (this.slope == arg0.slope ? 0 : 1);
+////            return 0;
+//        }
+//
+//        PointSlope(Point pt, Point pto)
+//        {
+//            this.pt = pt;
+//            this.slope = pt.compareTo(pto);
+//        }
+//    }
 
     public FastCollinearPoints(Point[] points)     // finds all line segments containing 4 or more points
     {
@@ -16,18 +40,66 @@ public class FastCollinearPoints {
                 throw new IllegalArgumentException();
             }
         }
-        for (int i = 0; i < points.length - 1; i++) {
-            for (int j = i + 1; j < points.length; j++) {
-                if (points[i].compareTo(points[j]) == 0) {
-                    throw new IllegalArgumentException();
-                }
-            }
+
+        Point[] sortedPoints = points.clone();
+        Arrays.sort(sortedPoints);
+
+        for (int i = 0; i < sortedPoints.length - 1; i++) {
+            if (sortedPoints[i].compareTo(sortedPoints[i + 1]) == 0)
+                throw new IllegalArgumentException();
         }
 
-        pts = new Point[points.length];
-        for (int i = 0; i < points.length; i++) {
-            pts[i] = points[i];
+        LineSegment[] segs = new LineSegment[sortedPoints.length];
+
+        for (int i=0;i<sortedPoints.length;i++) {
+            Point origin = sortedPoints[i];
+            Point[] slopePoints = new Point[sortedPoints.length-1-i];
+            for (int j=i+1;j<sortedPoints.length;j++)
+            {
+                //
+                slopePoints[j-(i+1)] = sortedPoints[j];
+            }
+            Arrays.sort(slopePoints, origin.slopeOrder());
+
+            int beg = 0;
+            int end = 1;
+//            for (int j=0;j<slopePoints.length;j++) {
+//                //
+//            }
+            double slopeVal = origin.slopeTo(slopePoints[beg]);
+            while (end < slopePoints.length)//; end++)
+            {
+//                double
+                if (slopeVal == origin.slopeTo(slopePoints[end])) {
+//                    end++;
+                }
+                else
+                {
+                    if (end - beg >= 3)
+                    {
+                        //
+                        segs[segmentCount++] = new LineSegment(origin,slopePoints[end-1]);
+                    }
+                    beg = end;
+                    slopeVal = origin.slopeTo(slopePoints[beg]);
+//                    end
+                }
+                end++;
+
+            }
+
+            if (end - beg >=2) {
+                //
+                segs[segmentCount++] = new LineSegment(origin,slopePoints[end]);
+            }
+
+            segments = new LineSegment[segmentCount];
+            for (int k=0;k<segments.length;k++) {
+                segments[k] = segs[k];
+            }
+
         }
+
     }
 
     public           int numberOfSegments()        // the number of line segments
