@@ -29,6 +29,7 @@ public class FastCollinearPoints {
         }
 
         LineSegment[] segs = new LineSegment[sortedPoints.length];
+        double[] slopes = new double[sortedPoints.length];
 
         for (int i = 0; i < sortedPoints.length - 3; i++) {
             Point origin = sortedPoints[i];
@@ -47,7 +48,20 @@ public class FastCollinearPoints {
                 } else {
                     if (end - beg >= 3) {
                         //
-                        segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
+                        double slopeNew = origin.slopeTo(slopePoints[end - 1]);
+                        boolean checked = false;
+                        for (int s = 0; s < segmentCount; s++) {
+                            //
+                            if (slopes[s] == slopeNew) {
+                                checked = true;
+                                break;
+                            }
+                        }
+
+                        if (!checked) {
+                            slopes[segmentCount] = origin.slopeTo(slopePoints[end - 1]);
+                            segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
+                        }
                     }
                     beg = end;
                     slopeVal = origin.slopeTo(slopePoints[beg]);
@@ -57,7 +71,23 @@ public class FastCollinearPoints {
             }
 
             if (end - beg >= 3) {
-                segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
+                
+                double slopeNew = origin.slopeTo(slopePoints[end - 1]);
+                boolean checked = false;
+                for (int s = 0; s < segmentCount; s++) {
+                    //
+                    if (slopes[s] == slopeNew) {
+                        checked = true;
+                        break;
+                    }
+                }
+
+                if (!checked) {
+                    slopes[segmentCount] = origin.slopeTo(slopePoints[end - 1]);
+                    segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
+                }
+                
+//                segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
             }
 
         }
@@ -76,7 +106,7 @@ public class FastCollinearPoints {
 
     public LineSegment[] segments() // the line segments
     {
-        return null;
+        return segments;
     }
 
     public static void main(String[] args) {
