@@ -44,11 +44,9 @@ public class BruteCollinearPoints {
             }
         }
 
-        if (segmentCount > 0) {
-            segments = new LineSegment[segmentCount];
-            for (int i = 0; i < segmentCount; i++) {
-                segments[i] = segs[i];
-            }
+        segments = new LineSegment[segmentCount];
+        for (int i = 0; i < segmentCount; i++) {
+            segments[i] = segs[i];
         }
     }
 
