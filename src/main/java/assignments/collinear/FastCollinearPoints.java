@@ -130,7 +130,7 @@ public class FastCollinearPoints {
 
     public LineSegment[] segments() // the line segments
     {
-        return segments;
+        return segments.clone();
     }
 
     public static void main(String[] args) {
