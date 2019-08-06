@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.TreeSet;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
@@ -12,6 +13,7 @@ public class FastCollinearPoints {
     private static class PointSlope implements Comparable<PointSlope> {
         private final Point pt;
         private double slope;
+
         public PointSlope(Point pt, double slope) {
             this.pt = pt;
             this.slope = slope;
@@ -20,19 +22,10 @@ public class FastCollinearPoints {
         @Override
         public int compareTo(PointSlope ps) {
             int resPt = this.pt.compareTo(ps.pt);
-            if (resPt < 0) {
-                return -1;
-            } else if (resPt > 0) {
-                return 1;
+            if (resPt == 0) {
+                return Double.compare(this.slope, ps.slope);
             } else {
-                int resSlope = Double.compare(this.slope, ps.slope);
-                if (resSlope < 0) {
-                    return -1;
-                } else if (resSlope > 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+                return resPt;
             }
         }
     }
@@ -57,7 +50,7 @@ public class FastCollinearPoints {
         }
 
         LineSegment[] segs = new LineSegment[sortedPoints.length];
-        double[] slopes = new double[sortedPoints.length];
+        TreeSet<PointSlope> pointSlopeSet = new TreeSet<PointSlope>(); 
 
         for (int i = 0; i < sortedPoints.length - 3; i++) {
             Point origin = sortedPoints[i];
@@ -75,19 +68,13 @@ public class FastCollinearPoints {
                 if (slopeVal == origin.slopeTo(slopePoints[end])) {
                 } else {
                     if (end - beg >= 3) {
-                        //
-                        double slopeNew = origin.slopeTo(slopePoints[end - 1]);
-                        boolean checked = false;
-                        for (int s = 0; s < segmentCount; s++) {
-                            //
-                            if (slopes[s] == slopeNew) {
-                                checked = true;
-                                break;
-                            }
-                        }
-
-                        if (!checked) {
-                            slopes[segmentCount] = origin.slopeTo(slopePoints[end - 1]);
+                        
+                        double slope = origin.slopeTo(slopePoints[end - 1]);
+                        Point pt = slopePoints[end - 1];
+                        PointSlope newPs = new PointSlope(pt, slope);
+                        
+                        if (!pointSlopeSet.contains(newPs)) {
+                            pointSlopeSet.add(newPs);
                             segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
                         }
                     }
@@ -100,22 +87,14 @@ public class FastCollinearPoints {
 
             if (end - beg >= 3) {
                 
-                double slopeNew = origin.slopeTo(slopePoints[end - 1]);
-                boolean checked = false;
-                for (int s = 0; s < segmentCount; s++) {
-                    //
-                    if (slopes[s] == slopeNew) {
-                        checked = true;
-                        break;
-                    }
-                }
-
-                if (!checked) {
-                    slopes[segmentCount] = origin.slopeTo(slopePoints[end - 1]);
+                double slope = origin.slopeTo(slopePoints[end - 1]);
+                Point pt = slopePoints[end - 1];
+                PointSlope newPs = new PointSlope(pt, slope);
+                
+                if (!pointSlopeSet.contains(newPs)) {
+                    pointSlopeSet.add(newPs);
                     segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
                 }
-                
-//                segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
             }
 
         }
