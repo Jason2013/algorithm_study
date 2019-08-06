@@ -9,6 +9,34 @@ public class FastCollinearPoints {
     private int segmentCount = 0;
     private LineSegment[] segments;
 
+    private static class PointSlope implements Comparable<PointSlope> {
+        private final Point pt;
+        private double slope;
+        public PointSlope(Point pt, double slope) {
+            this.pt = pt;
+            this.slope = slope;
+        }
+
+        @Override
+        public int compareTo(PointSlope ps) {
+            int resPt = this.pt.compareTo(ps.pt);
+            if (resPt < 0) {
+                return -1;
+            } else if (resPt > 0) {
+                return 1;
+            } else {
+                int resSlope = Double.compare(this.slope, ps.slope);
+                if (resSlope < 0) {
+                    return -1;
+                } else if (resSlope > 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        }
+    }
+
     public FastCollinearPoints(Point[] points) // finds all line segments containing 4 or more points
     {
         if (points == null) {
