@@ -64,11 +64,12 @@ public class FastCollinearPoints {
             double slopeVal = origin.slopeTo(slopePoints[beg]);
             while (end < slopePoints.length)
             {
-                if (slopeVal == origin.slopeTo(slopePoints[end])) {
+                double curSlopeVal = origin.slopeTo(slopePoints[end]);
+                if (slopeVal == curSlopeVal) {
                 } else {
                     if (end - beg >= 3) {
 
-                        PointSlope ps = new PointSlope(slopePoints[end - 1], origin.slopeTo(slopePoints[end - 1]));
+                        PointSlope ps = new PointSlope(slopePoints[end - 1], slopeVal);
                         if (!ContainsPointSlope(pointSlopes2, ps)) {
                             pointSlopes2.add(ps);
                             segs.add(new LineSegment(origin, slopePoints[end - 1]));
@@ -83,7 +84,7 @@ public class FastCollinearPoints {
 
             if (end - beg >= 3) {
 
-                PointSlope ps = new PointSlope(slopePoints[end - 1], origin.slopeTo(slopePoints[end - 1]));
+                PointSlope ps = new PointSlope(slopePoints[end - 1], slopeVal);
                 if (!ContainsPointSlope(pointSlopes2, ps)) {
                     pointSlopes2.add(ps);
                     segs.add(new LineSegment(origin, slopePoints[end - 1]));
