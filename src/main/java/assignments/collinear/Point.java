@@ -115,19 +115,20 @@ public class Point implements Comparable<Point> {
         public int compare(Point a, Point b) {
             double lhs = slopeTo(a);
             double rhs = slopeTo(b);
-            if (lhs == Double.POSITIVE_INFINITY && rhs == Double.POSITIVE_INFINITY ||
-                    lhs == Double.NEGATIVE_INFINITY && rhs == Double.NEGATIVE_INFINITY)
-                return 0;
-            double diff = slopeTo(a) - slopeTo(b);
-            if (diff < 0) {
-                return -1;
-            }
-            else if (diff == 0) {
-                return 0;
-            }
-            else {
-                return 1;
-            }
+            return Double.compare(lhs, rhs);
+//            if (lhs == Double.POSITIVE_INFINITY && rhs == Double.POSITIVE_INFINITY ||
+//                    lhs == Double.NEGATIVE_INFINITY && rhs == Double.NEGATIVE_INFINITY)
+//                return 0;
+//            double diff = slopeTo(a) - slopeTo(b);
+//            if (diff < 0) {
+//                return -1;
+//            }
+//            else if (diff == 0) {
+//                return 0;
+//            }
+//            else {
+//                return 1;
+//            }
         }
 
     }
