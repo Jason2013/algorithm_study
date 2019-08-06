@@ -12,6 +12,7 @@ public class FastCollinearPoints {
     private static class PointSlope implements Comparable<PointSlope> {
         private final Point pt;
         private double slope;
+
         public PointSlope(Point pt, double slope) {
             this.pt = pt;
             this.slope = slope;
@@ -20,20 +21,35 @@ public class FastCollinearPoints {
         @Override
         public int compareTo(PointSlope ps) {
             int resPt = this.pt.compareTo(ps.pt);
-            if (resPt < 0) {
-                return -1;
-            } else if (resPt > 0) {
-                return 1;
+            if (resPt == 0) {
+                return Double.compare(this.slope, ps.slope);
             } else {
-                int resSlope = Double.compare(this.slope, ps.slope);
-                if (resSlope < 0) {
-                    return -1;
-                } else if (resSlope > 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+                return resPt;
             }
+        }
+    }
+
+    private static class PointSlopeSet {
+        private int psCount = 0;
+        private final PointSlope[] pointSlopes;
+
+        public PointSlopeSet(int size) {
+            pointSlopes = new PointSlope[size];
+        }
+
+        public void add(PointSlope ps) {
+            if (contains(ps)) {
+                return;
+            }
+            pointSlopes[psCount++] = ps;
+        }
+
+        public boolean contains(PointSlope ps) {
+            for (int i = 0; i < psCount; i++) {
+                if (pointSlopes[i].compareTo(ps) == 0)
+                    return true;
+            }
+            return false;
         }
     }
 
@@ -57,6 +73,7 @@ public class FastCollinearPoints {
         }
 
         LineSegment[] segs = new LineSegment[sortedPoints.length];
+        PointSlopeSet pointSlopes = new PointSlopeSet(sortedPoints.length);
         double[] slopes = new double[sortedPoints.length];
 
         for (int i = 0; i < sortedPoints.length - 3; i++) {
@@ -75,19 +92,10 @@ public class FastCollinearPoints {
                 if (slopeVal == origin.slopeTo(slopePoints[end])) {
                 } else {
                     if (end - beg >= 3) {
-                        //
-                        double slopeNew = origin.slopeTo(slopePoints[end - 1]);
-                        boolean checked = false;
-                        for (int s = 0; s < segmentCount; s++) {
-                            //
-                            if (slopes[s] == slopeNew) {
-                                checked = true;
-                                break;
-                            }
-                        }
 
-                        if (!checked) {
-                            slopes[segmentCount] = origin.slopeTo(slopePoints[end - 1]);
+                        PointSlope ps = new PointSlope(slopePoints[end - 1], origin.slopeTo(slopePoints[end - 1]));
+                        if (!pointSlopes.contains(ps)) {
+                            pointSlopes.add(ps);
                             segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
                         }
                     }
@@ -99,25 +107,13 @@ public class FastCollinearPoints {
             }
 
             if (end - beg >= 3) {
-                
-                double slopeNew = origin.slopeTo(slopePoints[end - 1]);
-                boolean checked = false;
-                for (int s = 0; s < segmentCount; s++) {
-                    //
-                    if (slopes[s] == slopeNew) {
-                        checked = true;
-                        break;
-                    }
-                }
 
-                if (!checked) {
-                    slopes[segmentCount] = origin.slopeTo(slopePoints[end - 1]);
+                PointSlope ps = new PointSlope(slopePoints[end - 1], origin.slopeTo(slopePoints[end - 1]));
+                if (!pointSlopes.contains(ps)) {
+                    pointSlopes.add(ps);
                     segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
                 }
-                
-//                segs[segmentCount++] = new LineSegment(origin, slopePoints[end - 1]);
             }
-
         }
 
         segments = new LineSegment[segmentCount];
