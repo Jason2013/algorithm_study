@@ -26,7 +26,12 @@ public class FastCollinearPoints
      */
     public FastCollinearPoints(Point[] points)     
     {
-        if (points == null) throw new NullPointerException("Null Point array");
+        if (points == null) throw new IllegalArgumentException("Null Point array");
+        
+        for (Point pt: points) {
+            if (pt == null)
+                throw new IllegalArgumentException("Null Point array");
+        }
 
         int len = points.length;
 
