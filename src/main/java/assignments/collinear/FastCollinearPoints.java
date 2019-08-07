@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Comparator;
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Merge;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
@@ -42,21 +43,23 @@ public class FastCollinearPoints {
         }
 
         Point[] sortedPoints = points.clone();
-        Arrays.sort(sortedPoints, new Comparator<Point>() {
-            @Override
-            public int compare(Point p1, Point p2) {
-                int res = p1.compareTo(p2);
-                if (res == 0) {
-                    throw new IllegalArgumentException();
-                }
-                return res;
-            }
-        });
+        Merge.sort(sortedPoints);
+        
+//        , new Comparator<Point>() {
+//            @Override
+//            public int compare(Point p1, Point p2) {
+//                int res = p1.compareTo(p2);
+//                if (res == 0) {
+//                    throw new IllegalArgumentException();
+//                }
+//                return res;
+//            }
+//        });
 
-//        for (int i = 0; i < sortedPoints.length - 1; i++) {
-//            if (sortedPoints[i].compareTo(sortedPoints[i + 1]) == 0)
-//                throw new IllegalArgumentException();
-//        }
+        for (int i = 0; i < sortedPoints.length - 1; i++) {
+            if (sortedPoints[i].compareTo(sortedPoints[i + 1]) == 0)
+                throw new IllegalArgumentException();
+        }
 
         List<LineSegment> segs = new ArrayList<LineSegment>();
         ArrayList<PointSlope> pointSlopes2 = new ArrayList<PointSlope>();
