@@ -37,7 +37,7 @@ public class FastCollinearPoints {
         int lo = 0;
         int hi = lst.size() - 1;
 
-        while (lo < hi) {
+        while (lo <= hi) {
             int mid = (lo + hi) / 2;
             int res = ps.compareTo(lst.get(mid));
             if (res == 0) {
