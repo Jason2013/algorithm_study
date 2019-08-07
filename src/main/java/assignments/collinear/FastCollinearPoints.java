@@ -12,7 +12,7 @@ public class FastCollinearPoints {
 
     private LineSegment[] segments;
 
-    private static class PointSlope{
+    private static class PointSlope implements Comparable<PointSlope>{
         private final Point pt;
         private double slope;
 
@@ -20,15 +20,45 @@ public class FastCollinearPoints {
             this.pt = pt;
             this.slope = slope;
         }
+        
+        @Override
+        public int compareTo(PointSlope rhs) {
+            int res = Double.compare(slope, rhs.slope);
+            if (res == 0) {
+                return pt.compareTo(rhs.pt);
+            } else {
+                return res;
+            }
+        }
     }
 
     private boolean ContainsPointSlope(List<PointSlope> lst, PointSlope ps) {
-        for (PointSlope it : lst) {
-            if (Double.compare(it.slope, ps.slope) == 0 && it.pt.compareTo(ps.pt) == 0) {
+
+        int lo = 0;
+        int hi = lst.size() - 1;
+
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            int res = ps.compareTo(lst.get(mid));
+            if (res == 0) {
                 return true;
+            } else if (res < 0) {
+                hi = mid;
+            } else {
+                lo = mid;
             }
         }
+
         return false;
+    }
+    
+    private void AddPointSlopeToList(List<PointSlope> lst, PointSlope ps) {
+        int pos = 0;
+        while (pos < lst.size() && ps.compareTo(lst.get(pos)) > 0)
+        {
+            pos ++;
+        }
+        lst.add(pos, ps);
     }
 
     public FastCollinearPoints(Point[] points) // finds all line segments containing 4 or more points
@@ -84,7 +114,8 @@ public class FastCollinearPoints {
 
                         PointSlope ps = new PointSlope(slopePoints[end - 1], slopeVal);
                         if (!ContainsPointSlope(pointSlopes2, ps)) {
-                            pointSlopes2.add(ps);
+//                            pointSlopes2.add(ps);
+                            AddPointSlopeToList(pointSlopes2, ps);
                             segs.add(new LineSegment(origin, slopePoints[end - 1]));
                         }
                     }
@@ -99,7 +130,8 @@ public class FastCollinearPoints {
 
                 PointSlope ps = new PointSlope(slopePoints[end - 1], slopeVal);
                 if (!ContainsPointSlope(pointSlopes2, ps)) {
-                    pointSlopes2.add(ps);
+//                    pointSlopes2.add(ps);
+                    AddPointSlopeToList(pointSlopes2, ps);
                     segs.add(new LineSegment(origin, slopePoints[end - 1]));
                 }
             }
