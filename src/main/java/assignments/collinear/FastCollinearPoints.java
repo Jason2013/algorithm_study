@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Comparator;
+//import java.util.Comparator;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Merge;
@@ -32,7 +32,7 @@ public class FastCollinearPoints {
         }
     }
 
-    private boolean ContainsPointSlope(List<PointSlope> lst, PointSlope ps) {
+    private static boolean ContainsPointSlope(List<PointSlope> lst, PointSlope ps) {
 
         int lo = 0;
         int hi = lst.size() - 1;
@@ -43,16 +43,16 @@ public class FastCollinearPoints {
             if (res == 0) {
                 return true;
             } else if (res < 0) {
-                hi = mid;
+                hi = mid - 1;
             } else {
-                lo = mid;
+                lo = mid + 1;
             }
         }
 
         return false;
     }
     
-    private void AddPointSlopeToList(List<PointSlope> lst, PointSlope ps) {
+    private static void AddPointSlopeToList(List<PointSlope> lst, PointSlope ps) {
         int pos = 0;
         while (pos < lst.size() && ps.compareTo(lst.get(pos)) > 0)
         {
@@ -150,6 +150,24 @@ public class FastCollinearPoints {
     }
 
     public static void main(String[] args) {
+        
+//        List<PointSlope> lst = new ArrayList<PointSlope>();
+//        
+//        AddPointSlopeToList(lst, new PointSlope(new Point(1,1), 0.0));
+//        AddPointSlopeToList(lst, new PointSlope(new Point(2,1), 0.0));
+//        AddPointSlopeToList(lst, new PointSlope(new Point(3,1), 0.0));
+//        AddPointSlopeToList(lst, new PointSlope(new Point(5,1), 0.0));
+//        AddPointSlopeToList(lst, new PointSlope(new Point(4,1), 0.0));
+//        
+//        boolean res = ContainsPointSlope(lst, new PointSlope(new Point(4,1), 0.0));
+//        
+//        if (!res) {
+//            return;
+//        }
+//        
+//        if (args.length < 1000)
+//        return;
+        
         // TODO Auto-generated method stub
         try {
             FastCollinearPoints p1 = new FastCollinearPoints(null);
