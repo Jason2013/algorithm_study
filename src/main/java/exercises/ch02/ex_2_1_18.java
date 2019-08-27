@@ -36,7 +36,7 @@ public class Insertion {
 	public static void draw(Comparable[] a,int e,int min) {
 		int N=a.length;
 		for(int i=0;i<N;i++) {
-			double x=1.0*i/N;
+			double x=1.0*(i + 0.5)/N;
         	double y=(double)a[i]/2.0;
         	double rw=0.5/N;
         	double rh=(double)a[i]/2.0;        	
