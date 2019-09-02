@@ -68,6 +68,37 @@ int main()
 
 Node* buildBalancedTree(Node* root)
 {
-    return NULL;
+    if (root == NULL) return NULL;
+    root->left = buildBalancedTree(root->left);
+    root->right = buildBalancedTree(root->right);
+
+    int lDepth = height(root->left);
+    int rDepth = height(root->right);
+
+    if (lDepth - rDepth > 1)
+    {
+        if (height(root->left->left) >= height(root->left->right))
+        {
+            // left - left
+        }
+        else
+        {
+            // left - right
+        }
+
+    }
+    else if (lDepth - rDepth < -1)
+    {
+        if (height(root->right->left) <= height(root->right->right))
+        {
+            // right - right
+        }
+        else
+        {
+            // right - left
+        }
+    }
+
+    return root;
 }
 
