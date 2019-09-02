@@ -66,6 +66,24 @@ int main()
 }
 
 
+Node* rightRotate(Node* root)
+{
+    Node* y = root->left;
+    Node* t3 = y->right;
+    y->right = root;
+    root->left = t3;
+    return y;
+}
+
+Node* leftRotate(Node* root)
+{
+    Node* y = root->right;
+    Node* t2 = y->left;
+    y->left = root;
+    root->right = t2;
+    return y;
+}
+
 Node* buildBalancedTree(Node* root)
 {
     if (root == NULL) return NULL;
@@ -80,10 +98,13 @@ Node* buildBalancedTree(Node* root)
         if (height(root->left->left) >= height(root->left->right))
         {
             // left - left
+            root = rightRotate(root);
         }
         else
         {
             // left - right
+            root->left = leftRotate(root->left);
+            root = rightRotate(root);
         }
 
     }
@@ -92,10 +113,13 @@ Node* buildBalancedTree(Node* root)
         if (height(root->right->left) <= height(root->right->right))
         {
             // right - right
+            root = leftRotate(root);
         }
         else
         {
             // right - left
+            root->right = rightRotate(root->right);
+            root = leftRotate(root);
         }
     }
 
