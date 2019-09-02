@@ -34,6 +34,14 @@
         preOrder(node->right);
     }
 
+    void midOrder(Node* node)
+    {
+        if (node == NULL) return;
+        midOrder(node->left);
+        cout << node->data << ' ';
+        midOrder(node->right);
+    }
+
     int height(Node* node)
     {
         if (node == NULL) return 0;
@@ -42,6 +50,29 @@
         return ((lDepth > rDepth) ? lDepth : rDepth) + 1;
     }
 /* } */
+
+void checkBalanced(Node* root)
+{
+    if (root == NULL)
+        return;
+    int lDepth = height(root->left);
+    int rDepth = height(root->right);
+    int diff = lDepth-rDepth;
+    if (diff < -1 || diff > 1)
+    {
+    cout << "ERROR: " << root->data << " : ( " << (root->left ? root->left->data : 0)
+        << ", " << (root->right ? root->right->data : 0) << " )" << endl;
+    }
+    else
+    {
+    cout << "BALANCED: " << root->data << " : ( " << (root->left ? root->left->data : 0)
+        << ", " << (root->right ? root->right->data : 0) << " )" << endl;
+    }        
+
+    checkBalanced(root->left);
+    checkBalanced(root->right);
+
+}
 
 Node* buildBalancedTree(Node* root);
 int main()
@@ -59,7 +90,26 @@ int main()
             root = insert(root, temp);
         }
 
+        cout << "--------------------" << endl;
+        cout << "preOrder" << endl;
+        preOrder(root);
+        cout << endl;
+
+        cout << "midOrder" << endl;
+        midOrder(root);
+        cout << endl;
+
         root = buildBalancedTree(root);
+        checkBalanced(root);
+
+        cout << "after balanced" << endl;
+        cout << "preOrder" << endl;
+        preOrder(root);
+        cout << endl;
+
+        cout << "midOrder" << endl;
+        midOrder(root);
+        cout << endl;
         cout << height(root) << endl;
     }
     return 0;
@@ -122,6 +172,17 @@ Node* buildBalancedTree(Node* root)
             root = leftRotate(root);
         }
     }
+
+
+    int diff = height(root->left) - height(root->right);
+
+    if (diff < -1 || diff > 1)
+    {
+        cout << "ERROR" << endl;
+    }
+
+    cout << root->data << " : ( " << (root->left ? root->left->data : 0)
+        << ", " << (root->right ? root->right->data : 0) << " )" << endl;
 
     return root;
 }
